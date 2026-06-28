@@ -11,25 +11,38 @@
   body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #f1f5f9; min-height: 100vh; }
   button { font-family: inherit; cursor: pointer; }
   input { font-family: inherit; }
-
   .screen { display: none; }
   .screen.active { display: block; }
 
   /* HOME */
-  .home-header {
-    background: linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%);
-    padding: 28px 20px 24px; text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  }
+  .home-header { background: linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%); padding: 28px 20px 24px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
   .home-header .sun { font-size: 44px; margin-bottom: 4px; }
   .home-header h1 { color: #fff; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
   .home-header .sub { color: rgba(255,255,255,0.65); font-size: 14px; margin-top: 2px; }
-  .edit-btn {
-    margin-top: 14px; padding: 8px 20px;
-    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-    color: #fff; border-radius: 10px; font-size: 13px; font-weight: 600;
-  }
-  .kid-cards { padding: 20px 16px 0; }
+  .edit-btn { margin-top: 14px; padding: 8px 20px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 10px; font-size: 13px; font-weight: 600; }
+
+  /* FAMILY PRIZES */
+  .family-prizes { margin: 16px 16px 0; }
+  .family-prize-card { background: #fff; border-radius: 14px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .family-prize-header { padding: 10px 14px 6px; display: flex; justify-content: space-between; align-items: center; }
+  .family-prize-label { font-size: 15px; font-weight: 700; color: #111; }
+  .family-prize-pts { font-size: 13px; color: #9ca3af; }
+  .family-prize-bar-wrap { padding: 0 14px 6px; }
+  .family-prize-track { height: 8px; background: #f3f4f6; border-radius: 4px; overflow: hidden; }
+  .family-prize-fill { height: 100%; border-radius: 4px; transition: width 0.4s; background: #1e3a5f; }
+  .family-prize-kids { display: flex; gap: 6px; padding: 6px 14px 12px; }
+  .family-prize-kid { flex: 1; text-align: center; }
+  .family-prize-kid-name { font-size: 11px; color: #9ca3af; margin-bottom: 3px; }
+  .family-prize-kid-bar { height: 5px; border-radius: 3px; background: #f3f4f6; overflow: hidden; margin-bottom: 3px; }
+  .family-prize-kid-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+  .family-prize-kid-pts { font-size: 11px; font-weight: 700; }
+  .family-prize-unlocked { padding: 8px 14px 12px; display: flex; align-items: center; gap: 8px; }
+  .unlock-badge { background: #f0fdf4; color: #16a34a; border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 700; flex: 1; text-align: center; }
+  .redeem-family-btn { padding: 6px 14px; border-radius: 8px; border: none; background: #16a34a; color: #fff; font-weight: 700; font-size: 13px; }
+  .needs-more { padding: 6px 14px 12px; font-size: 12px; color: #f97316; font-weight: 600; }
+
+  /* KID CARDS */
+  .kid-cards { padding: 16px 16px 0; }
   .kid-card { background: #fff; border-radius: 16px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); overflow: hidden; }
   .kid-card-bar { height: 5px; }
   .kid-card-body { padding: 14px 16px; }
@@ -75,7 +88,6 @@
   .log-entry { display: flex; justify-content: space-between; padding: 9px 16px; border-bottom: 1px solid #f9f9f9; font-size: 14px; }
   .log-entry-label { color: #333; }
   .log-entry-date { color: #bbb; font-size: 12px; }
-  .log-pts { font-weight: 700; }
   .log-empty { padding: 16px; color: #aaa; font-size: 14px; }
 
   /* TAB CONTENT */
@@ -100,7 +112,7 @@
   /* BADGE */
   .badge { min-width: 38px; text-align: center; padding: 2px 8px; border-radius: 99px; font-size: 13px; font-weight: 700; display: inline-block; }
 
-  /* STEPPER / COUNTER */
+  /* COUNTER */
   .counter { display: flex; gap: 6px; align-items: center; }
   .counter-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 17px; font-weight: 700; color: #555; display: flex; align-items: center; justify-content: center; }
   .counter-btn.add { background: #fee2e2; border: none; color: #dc2626; }
@@ -108,7 +120,16 @@
 
   /* LOG BTN */
   .log-goal-btn { padding: 6px 14px; border-radius: 8px; border: none; font-weight: 700; font-size: 14px; color: #fff; }
-  .log-goal-btn.locked { background: #e5e7eb; color: #9ca3af; cursor: not-allowed; }
+
+  /* WILDCARD ROW */
+  .wildcard-row { padding: 10px 16px; border-top: 1px dashed #e5e7eb; background: #fafafa; }
+  .wildcard-label { font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+  .wildcard-inputs { display: flex; gap: 8px; align-items: center; }
+  .wildcard-text { flex: 1; border: 1px solid #e5e7eb; border-radius: 8px; padding: 7px 10px; font-size: 14px; outline: none; }
+  .wildcard-pts-wrap { display: flex; align-items: center; gap: 4px; }
+  .wc-step { width: 26px; height: 26px; border-radius: 6px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 15px; font-weight: 700; color: #555; display: flex; align-items: center; justify-content: center; }
+  .wc-pts-val { min-width: 24px; text-align: center; font-weight: 700; font-size: 14px; }
+  .wc-log-btn { padding: 7px 12px; border-radius: 8px; border: none; color: #fff; font-weight: 700; font-size: 13px; white-space: nowrap; }
 
   /* PRIZES */
   .prize-icon { font-size: 22px; }
@@ -125,28 +146,28 @@
   .edit-header-btns { display: flex; gap: 8px; }
   .edit-cancel { padding: 6px 14px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; font-weight: 600; font-size: 14px; }
   .edit-save { padding: 6px 14px; border-radius: 8px; border: none; background: #1e3a5f; color: #fff; font-weight: 700; font-size: 14px; }
-  .edit-tabs { display: flex; background: #fff; border-bottom: 1px solid #e5e7eb; }
-  .edit-tab { flex: 1; padding: 10px 0; border: none; font-size: 13px; font-weight: 700; background: #fff; color: #9ca3af; border-bottom: 2px solid transparent; cursor: pointer; }
+  .edit-tabs { display: flex; background: #fff; border-bottom: 1px solid #e5e7eb; overflow-x: auto; }
+  .edit-tab { flex-shrink: 0; padding: 10px 14px; border: none; font-size: 13px; font-weight: 700; background: #fff; color: #9ca3af; border-bottom: 2px solid transparent; cursor: pointer; }
   .edit-tab.active { color: #1e3a5f; border-bottom-color: #1e3a5f; background: #f9fafb; }
   .edit-body { overflow-y: auto; flex: 1; padding: 12px 16px; }
   .edit-item { background: #fff; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); display: flex; gap: 8px; align-items: center; }
   .edit-item-inner { flex: 1; }
   .edit-input { width: 100%; border: 1px solid #e5e7eb; border-radius: 7px; padding: 5px 9px; font-size: 14px; font-family: inherit; outline: none; }
-  .edit-item-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .edit-item-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
   .edit-pts-label { font-size: 12px; color: #9ca3af; }
   .edit-stepper { display: flex; align-items: center; gap: 4px; }
   .step-btn { width: 28px; height: 28px; border-radius: 7px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .step-val { min-width: 28px; text-align: center; font-weight: 700; font-size: 15px; }
-  .edit-multi-label { font-size: 12px; color: #9ca3af; display: flex; align-items: center; gap: 4px; margin-left: 6px; }
   .del-btn { padding: 4px 8px; background: #fee2e2; color: #dc2626; border: none; border-radius: 7px; font-size: 16px; font-weight: 700; flex-shrink: 0; }
   .add-new { background: #fff; border-radius: 10px; padding: 12px; margin-top: 4px; border: 2px dashed #e5e7eb; }
   .add-new-label { font-size: 12px; font-weight: 700; color: #9ca3af; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.8px; }
   .add-input { width: 100%; border: 1px solid #e5e7eb; border-radius: 7px; padding: 8px 10px; font-size: 14px; font-family: inherit; outline: none; margin-bottom: 8px; }
-  .add-controls { display: flex; align-items: center; gap: 10px; }
+  .add-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .add-btn { margin-left: auto; padding: 7px 16px; background: #1e3a5f; color: #fff; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; }
-
-  .nonpoint-item { padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #555; }
-  .nonpoint-item:last-child { border-bottom: none; }
+  .prize-edit-row { background: #fff; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .prize-edit-label { font-size: 14px; margin-bottom: 6px; }
+  .prize-edit-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .prize-type-badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -159,8 +180,9 @@
     <div class="sub" id="home-total-sub">0 pts across all kids</div>
     <button class="edit-btn" onclick="openEdit()">✏️ Edit categories</button>
   </div>
+  <div class="family-prizes" id="family-prizes-container"></div>
   <div class="kid-cards" id="kid-cards-container"></div>
-  <div class="home-footer">Daily items reset automatically each morning · Bookmark this page to return</div>
+  <div class="home-footer">Daily items reset automatically each morning · awicks87.github.io/Kids-Summer-Tracker</div>
 </div>
 
 <!-- KID SCREEN -->
@@ -174,8 +196,7 @@
     <div class="score-bar">
       <div class="score-row">
         <div class="score-big">
-          <span id="kid-total-pts">0</span>
-          <span>pts total</span>
+          <span id="kid-total-pts">0</span><span>pts total</span>
         </div>
         <div class="score-right">
           <div><strong id="kid-today-pts">0</strong> today</div>
@@ -191,12 +212,10 @@
       <button class="tab-btn" onclick="switchTab('prizes',this)">Prizes</button>
     </div>
   </div>
-
   <div class="log-panel" id="log-panel">
     <div class="log-header">Point history</div>
     <div id="log-entries"></div>
   </div>
-
   <div class="tab-content active" id="tab-daily"></div>
   <div class="tab-content" id="tab-goals"></div>
   <div class="tab-content" id="tab-prizes"></div>
@@ -216,31 +235,40 @@
       <button class="edit-tab active" onclick="switchEditTab('daily',this)">Daily</button>
       <button class="edit-tab" onclick="switchEditTab('goals',this)">Goals</button>
       <button class="edit-tab" onclick="switchEditTab('violations',this)">Violations</button>
+      <button class="edit-tab" onclick="switchEditTab('indPrizes',this)">Ind. Prizes</button>
+      <button class="edit-tab" onclick="switchEditTab('famPrizes',this)">Fam. Prizes</button>
     </div>
     <div class="edit-body" id="edit-body"></div>
   </div>
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────────
+// ── DEFAULT DATA ──────────────────────────────────────────────────────────────
+
+const KID_NAMES = ["Micah","Blythe","Jude"];
+const KID_COLORS = [
+  {accent:"#f97316", light:"#fff7ed", chip:"#fed7aa"},
+  {accent:"#8b5cf6", light:"#f5f3ff", chip:"#ddd6fe"},
+  {accent:"#0ea5e9", light:"#f0f9ff", chip:"#bae6fd"},
+];
 
 const DEFAULT_DAILY = [
-  {id:"outside",   label:"Play outside",                    note:"min 30 min", pts:2},
-  {id:"read",      label:"Read a book",                     note:"min 30 min", pts:2},
-  {id:"movie",     label:"Watch a movie",                   pts:1},
-  {id:"feed",      label:"Feed Snarky",                     pts:1},
-  {id:"eclass",    label:"Online class / educational program", pts:5},
-  {id:"art",       label:"Create / design something artistic", pts:2},
-  {id:"walk",      label:"Go for a walk",                   pts:3},
-  {id:"bike",      label:"Ride your bike",                  pts:3},
-  {id:"swim",      label:"Swim",                            pts:2},
-  {id:"food",      label:"Try a new food",                  pts:3},
-  {id:"drink",     label:"Try a new drink",                 pts:2},
-  {id:"meal",      label:"Prepare a meal",                  pts:10},
-  {id:"shower",    label:"Shower without being asked",      pts:2},
-  {id:"laundry",   label:"Do laundry",                      pts:4},
-  {id:"tidy",      label:"Tidy / vacuum / dust downstairs", pts:2},
-  {id:"instrument",label:"Practice instrument",             pts:2},
+  {id:"outside",    label:"Play outside",                    note:"min 30 min", pts:2},
+  {id:"read",       label:"Read a book",                     note:"min 30 min", pts:2},
+  {id:"movie",      label:"Watch a movie",                   pts:1},
+  {id:"feed",       label:"Feed Snarky",                     pts:1},
+  {id:"eclass",     label:"Online class / educational program", pts:5},
+  {id:"art",        label:"Create / design something artistic", pts:2},
+  {id:"walk",       label:"Go for a walk",                   pts:3},
+  {id:"bike",       label:"Ride your bike",                  pts:3},
+  {id:"swim",       label:"Swim",                            pts:2},
+  {id:"food",       label:"Try a new food",                  pts:3},
+  {id:"drink",      label:"Try a new drink",                 pts:2},
+  {id:"meal",       label:"Prepare a meal",                  pts:10},
+  {id:"shower",     label:"Shower without being asked",      pts:2},
+  {id:"laundry",    label:"Do laundry",                      pts:4},
+  {id:"tidy",       label:"Tidy / vacuum / dust downstairs", pts:2},
+  {id:"instrument", label:"Practice instrument",             pts:2},
 ];
 
 const DEFAULT_GOALS = [
@@ -259,26 +287,21 @@ const DEFAULT_VIOLATIONS = [
   {id:"dishes",  label:"Dirty dishes / cups in bedroom", pts:2},
 ];
 
-const PRIZES = [
-  {pts:50,  label:"🍦 Ice cream outing"},
-  {pts:150, label:"🍳 Breakfast at Valley Bistro"},
-  {pts:250, label:"🎬 Drive-in or Senators game"},
-  {pts:500, label:"🎢 Trip to Knoebels"},
+// Individual prizes (per-kid)
+const DEFAULT_IND_PRIZES = [
+  {id:"rolling_device", label:"+1 hr device time", pts:5,  rolling:true},
+  {id:"donuts",         label:"🍩 Donuts for breakfast", pts:25, rolling:true},
 ];
 
-const ROLLING = [
-  {pts:5,  label:"+1 hr device time"},
-  {pts:25, label:"🍩 Donuts for breakfast"},
+// Family/cumulative prizes
+const DEFAULT_FAM_PRIZES = [
+  {id:"icecream",  label:"🍦 Ice cream outing",        pts:50},
+  {id:"bistro",    label:"🍳 Breakfast at Valley Bistro", pts:150},
+  {id:"drivein",   label:"🎬 Drive-in or Senators game", pts:250},
+  {id:"knoebels",  label:"🎢 Trip to Knoebels",          pts:500},
 ];
 
-const KID_NAMES = ["Micah","Blythe","Jude"];
-const KID_COLORS = [
-  {accent:"#f97316", light:"#fff7ed", chip:"#fed7aa"},
-  {accent:"#8b5cf6", light:"#f5f3ff", chip:"#ddd6fe"},
-  {accent:"#0ea5e9", light:"#f0f9ff", chip:"#bae6fd"},
-];
-
-// ── STATE ─────────────────────────────────────────────────────────────────────
+// ── STORAGE ───────────────────────────────────────────────────────────────────
 
 function todayStr() { return new Date().toDateString(); }
 function uid() { return Math.random().toString(36).slice(2,8); }
@@ -294,18 +317,24 @@ function loadState() {
   });
   let config;
   try { const c = localStorage.getItem('sk_config'); config = c ? JSON.parse(c) : null; } catch { config = null; }
-  if (!config) config = {daily:[...DEFAULT_DAILY], goals:[...DEFAULT_GOALS], violations:[...DEFAULT_VIOLATIONS]};
-  // Reset daily if new day
+  if (!config) config = {
+    daily:[...DEFAULT_DAILY],
+    goals:[...DEFAULT_GOALS],
+    violations:[...DEFAULT_VIOLATIONS],
+    indPrizes:[...DEFAULT_IND_PRIZES],
+    famPrizes:[...DEFAULT_FAM_PRIZES],
+    famRedeemed: [],
+  };
+  // backfill if missing
+  if (!config.indPrizes) config.indPrizes = [...DEFAULT_IND_PRIZES];
+  if (!config.famPrizes) config.famPrizes = [...DEFAULT_FAM_PRIZES];
+  if (!config.famRedeemed) config.famRedeemed = [];
   kids = kids.map(k => k.lastDay !== todayStr() ? {...k, daily:{}, violations:{}, lastDay:todayStr()} : k);
   return {kids, config};
 }
 
-function saveKid(i) {
-  localStorage.setItem('sk_kid_'+i, JSON.stringify(state.kids[i]));
-}
-function saveConfig() {
-  localStorage.setItem('sk_config', JSON.stringify(state.config));
-}
+function saveKid(i) { localStorage.setItem('sk_kid_'+i, JSON.stringify(state.kids[i])); }
+function saveConfig() { localStorage.setItem('sk_config', JSON.stringify(state.config)); }
 
 let state = loadState();
 let activeKid = 0;
@@ -313,6 +342,9 @@ let activeTab = 'daily';
 let logOpen = false;
 let editSection = 'daily';
 let editDraft = null;
+
+// wildcard pts per tab
+let wcDailyPts = 2, wcGoalPts = 2, wcViolPts = 2;
 
 // ── NAVIGATION ────────────────────────────────────────────────────────────────
 
@@ -325,10 +357,11 @@ function showScreen(id) {
 function goHome() { logOpen = false; showScreen('home'); renderHome(); }
 
 function openKid(i) {
-  activeKid = i;
-  activeTab = 'daily';
-  logOpen = false;
+  activeKid = i; activeTab = 'daily'; logOpen = false;
   showScreen('kid');
+  // reset tab UI
+  document.querySelectorAll('.tab-btn').forEach((b,idx) => b.classList.toggle('active', idx===0));
+  document.querySelectorAll('.tab-content').forEach((t,idx) => t.classList.toggle('active', idx===0));
   renderKid();
 }
 
@@ -343,35 +376,115 @@ function switchTab(tab, btn) {
 
 function toggleLog() {
   logOpen = !logOpen;
-  const panel = document.getElementById('log-panel');
-  panel.classList.toggle('open', logOpen);
+  document.getElementById('log-panel').classList.toggle('open', logOpen);
   document.querySelector('.log-btn').textContent = logOpen ? 'Hide log' : 'Log';
   if (logOpen) renderLog();
+}
+
+// ── FAMILY PRIZE LOGIC ────────────────────────────────────────────────────────
+
+function familyTotal() { return state.kids.reduce((s,k) => s+k.total, 0); }
+
+function famPrizeUnlocked(prize) {
+  const total = familyTotal();
+  if (total < prize.pts) return false;
+  const minEach = Math.floor(prize.pts / 3);
+  return state.kids.every(k => k.total >= minEach);
+}
+
+function famPrizeLagging(prize) {
+  // returns names of kids who haven't hit their share yet
+  const minEach = Math.floor(prize.pts / 3);
+  return state.kids.filter(k => k.total < minEach).map(k => k.label);
+}
+
+function redeemFamPrize(prizeId) {
+  const prize = state.config.famPrizes.find(p => p.id === prizeId);
+  if (!famPrizeUnlocked(prize)) return;
+  if (!confirm('Redeem "'+prize.label+'" for the whole family?')) return;
+  state.config.famRedeemed.push({label:prize.label, d:todayStr()});
+  saveConfig();
+  renderHome();
 }
 
 // ── HOME RENDER ───────────────────────────────────────────────────────────────
 
 function renderHome() {
-  const total = state.kids.reduce((s,k) => s+k.total, 0);
+  const total = familyTotal();
   document.getElementById('home-total-sub').textContent = total+' pts across all kids';
+
+  // Family prizes
+  const fpContainer = document.getElementById('family-prizes-container');
+  const unredeemedFam = state.config.famPrizes.filter(p => {
+    const timesRedeemed = state.config.famRedeemed.filter(r => r.label === p.label).length;
+    return timesRedeemed === 0; // show until redeemed
+  });
+
+  if (unredeemedFam.length) {
+    let html = '<div style="padding:4px 0 0;"><div style="font-size:11px;font-weight:800;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;padding:0 2px 8px;">🏆 Family Prizes</div>';
+    unredeemedFam.forEach(prize => {
+      const ft = familyTotal();
+      const pct = Math.min(100, (ft / prize.pts) * 100);
+      const minEach = Math.floor(prize.pts / 3);
+      const unlocked = famPrizeUnlocked(prize);
+      const lagging = famPrizeLagging(prize);
+
+      const kidBarsHtml = state.kids.map((k,i) => {
+        const c = KID_COLORS[i];
+        const kPct = Math.min(100, (k.total / minEach) * 100);
+        const met = k.total >= minEach;
+        return `<div class="family-prize-kid">
+          <div class="family-prize-kid-name">${k.label}</div>
+          <div class="family-prize-kid-bar"><div class="family-prize-kid-fill" style="width:${kPct}%;background:${met?'#16a34a':c.accent}"></div></div>
+          <div class="family-prize-kid-pts" style="color:${met?'#16a34a':c.accent}">${k.total}/${minEach}</div>
+        </div>`;
+      }).join('');
+
+      html += `<div class="family-prize-card">
+        <div class="family-prize-header">
+          <span class="family-prize-label">${prize.label}</span>
+          <span class="family-prize-pts">${ft}/${prize.pts} pts</span>
+        </div>
+        <div class="family-prize-bar-wrap">
+          <div class="family-prize-track"><div class="family-prize-fill" style="width:${pct}%"></div></div>
+        </div>
+        <div class="family-prize-kids">${kidBarsHtml}</div>`;
+
+      if (unlocked) {
+        html += `<div class="family-prize-unlocked">
+          <div class="unlock-badge">🎉 Everyone qualifies!</div>
+          <button class="redeem-family-btn" onclick="redeemFamPrize('${prize.id}')">Redeem</button>
+        </div>`;
+      } else if (lagging.length && ft >= prize.pts) {
+        html += `<div class="needs-more">${lagging.join(' & ')} need${lagging.length===1?'s':''} more pts to qualify</div>`;
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+    fpContainer.innerHTML = html;
+  } else {
+    fpContainer.innerHTML = '';
+  }
+
+  // Kid cards
   const container = document.getElementById('kid-cards-container');
   container.innerHTML = '';
   state.kids.forEach((kid,i) => {
     const color = KID_COLORS[i];
-    const nextPrize = PRIZES.find(p => kid.total < p.pts);
-    const pct = nextPrize ? Math.min(100,(kid.total/nextPrize.pts)*100) : 100;
+    // next individual prize
+    const nextInd = state.config.indPrizes.filter(p => !p.rolling).find(p => kid.total < p.pts);
     const extraDevice = Math.floor(kid.total/5);
-    const unlockedPrizes = PRIZES.filter(p => kid.total >= p.pts);
+    const unlockedInd = state.config.indPrizes.filter(p => !p.rolling && kid.total >= p.pts);
 
     const chipsHtml = [
       `<span class="chip" style="background:${color.light};color:${color.accent}">📱 ${2+extraDevice} hrs device</span>`,
-      ...unlockedPrizes.map(p => `<span class="chip" style="background:#f0fdf4;color:#16a34a">🔓 ${p.label}</span>`)
+      ...unlockedInd.map(p => `<span class="chip" style="background:#f0fdf4;color:#16a34a">🔓 ${p.label}</span>`)
     ].join('');
 
-    const progressHtml = nextPrize ? `
+    const progressHtml = nextInd ? `
       <div class="progress-bar-wrap">
-        <div class="progress-track"><div class="progress-fill" style="width:${pct}%;background:${color.accent}"></div></div>
-        <div class="progress-label">${nextPrize.pts - kid.total} pts to ${nextPrize.label}</div>
+        <div class="progress-track"><div class="progress-fill" style="width:${Math.min(100,(kid.total/nextInd.pts)*100)}%;background:${color.accent}"></div></div>
+        <div class="progress-label">${nextInd.pts - kid.total} pts to ${nextInd.label}</div>
       </div>` : '';
 
     const div = document.createElement('div');
@@ -402,41 +515,30 @@ function renderHome() {
 function renderKid() {
   const kid = state.kids[activeKid];
   const color = KID_COLORS[activeKid];
-
-  // Header color
   document.getElementById('kid-header').style.background = color.accent;
   document.getElementById('kid-header-name').textContent = kid.label;
-
-  // Tab btn active color
   document.querySelectorAll('.tab-btn.active').forEach(b => b.style.color = color.accent);
 
-  // Score
   const dailyPts = state.config.daily.filter(i => kid.daily[i.id]).reduce((s,i) => s+i.pts, 0);
   const extraDevice = Math.floor(kid.total/5);
-  const nextPrize = PRIZES.find(p => kid.total < p.pts);
-  const pct = nextPrize ? Math.min(100,(kid.total/nextPrize.pts)*100) : 100;
+  const nextInd = state.config.indPrizes.filter(p => !p.rolling).find(p => kid.total < p.pts);
+  const pct = nextInd ? Math.min(100,(kid.total/nextInd.pts)*100) : 100;
 
   document.getElementById('kid-total-pts').textContent = kid.total;
   document.getElementById('kid-today-pts').textContent = '+'+dailyPts;
   document.getElementById('kid-device-time').textContent = '📱 '+(2+extraDevice)+' hrs device';
   document.getElementById('score-fill').style.width = pct+'%';
-  document.getElementById('score-next').textContent = nextPrize
-    ? (nextPrize.pts - kid.total)+' pts to '+nextPrize.label : '🎉 All prizes unlocked!';
-
-  // Reset tabs
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-btn')[['daily','goals','prizes'].indexOf(activeTab)].classList.add('active');
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-'+activeTab).classList.add('active');
+  document.getElementById('score-next').textContent = nextInd
+    ? (nextInd.pts-kid.total)+' pts to '+nextInd.label : '🎉 All individual prizes unlocked!';
 
   renderKidTab();
   if (logOpen) renderLog();
 }
 
 function renderKidTab() {
-  if (activeTab === 'daily') renderDaily();
-  if (activeTab === 'goals') renderGoals();
-  if (activeTab === 'prizes') renderPrizes();
+  if (activeTab==='daily') renderDaily();
+  if (activeTab==='goals') renderGoals();
+  if (activeTab==='prizes') renderPrizes();
 }
 
 function renderLog() {
@@ -446,7 +548,7 @@ function renderLog() {
   container.innerHTML = kid.log.map(e => `
     <div class="log-entry">
       <div><div class="log-entry-label">${e.label}</div><div class="log-entry-date">${e.d}</div></div>
-      <span class="log-pts" style="color:${e.pts>=0?KID_COLORS[activeKid].accent:'#dc2626'}">${e.pts>=0?'+':''}${e.pts}</span>
+      <span style="font-weight:700;color:${e.pts>=0?KID_COLORS[activeKid].accent:'#dc2626'}">${e.pts>=0?'+':''}${e.pts}</span>
     </div>`).join('');
 }
 
@@ -455,65 +557,113 @@ function renderLog() {
 function renderDaily() {
   const kid = state.kids[activeKid];
   const color = KID_COLORS[activeKid];
-  const el = document.getElementById('tab-daily');
 
   const dailyRows = state.config.daily.map(item => {
     const on = !!kid.daily[item.id];
-    const badgeBg = color.chip; const badgeColor = color.accent;
-    return `
-      <div class="row" onclick="toggleDaily('${item.id}')" style="cursor:pointer;user-select:none">
-        <div class="check-box ${on?'checked':''}" style="${on?'background:'+color.accent+';border-color:'+color.accent:''}">
-          ${on?'✓':''}
-        </div>
-        <div class="row-label">
-          <div class="row-main ${on?'done':''}">${item.label}</div>
-          ${item.note?'<div class="row-note">'+item.note+'</div>':''}
-        </div>
-        <span class="badge" style="background:${on?color.chip:'#f3f4f6'};color:${on?color.accent:'#bbb'}">+${item.pts}</span>
-      </div>`;
+    return `<div class="row" onclick="toggleDaily('${item.id}')" style="cursor:pointer;user-select:none">
+      <div class="check-box ${on?'checked':''}" style="${on?'background:'+color.accent+';border-color:'+color.accent:''}">${on?'✓':''}</div>
+      <div class="row-label">
+        <div class="row-main ${on?'done':''}">${item.label}</div>
+        ${item.note?'<div class="row-note">'+item.note+'</div>':''}
+      </div>
+      <span class="badge" style="background:${on?color.chip:'#f3f4f6'};color:${on?color.accent:'#bbb'}">+${item.pts}</span>
+    </div>`;
   }).join('');
 
   const vRows = state.config.violations.map(v => {
     const c = kid.violations[v.id]||0;
-    return `
-      <div class="row">
-        <div class="row-label">
-          <div class="row-main">${v.label}</div>
-          <div class="row-sub" style="color:#dc2626">−${v.pts} pts · ${c}× today</div>
-        </div>
-        <div class="counter">
-          <button class="counter-btn" onclick="removeViolation('${v.id}')" ${!c?'disabled':''}>−</button>
-          <button class="counter-btn add" onclick="addViolation('${v.id}')">+</button>
-        </div>
-      </div>`;
+    return `<div class="row">
+      <div class="row-label">
+        <div class="row-main">${v.label}</div>
+        <div class="row-sub" style="color:#dc2626">−${v.pts} pts · ${c}× today</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="removeViolation('${v.id}')" ${!c?'disabled':''}>−</button>
+        <button class="counter-btn add" onclick="addViolation('${v.id}')">+</button>
+      </div>
+    </div>`;
   }).join('');
 
-  el.innerHTML = `
+  document.getElementById('tab-daily').innerHTML = `
     <div class="card">
       <div class="section-head" style="color:${color.accent};background:${color.light}">Daily checklist</div>
       ${dailyRows}
+      <div class="wildcard-row">
+        <div class="wildcard-label">⭐ Parent's choice – one-off bonus</div>
+        <div class="wildcard-inputs">
+          <input class="wildcard-text" id="wc-daily-label" placeholder="What did they do?" />
+          <div class="wildcard-pts-wrap">
+            <button class="wc-step" onclick="wcStep('daily',-1)">−</button>
+            <span class="wc-pts-val" id="wc-daily-pts">${wcDailyPts}</span>
+            <button class="wc-step" onclick="wcStep('daily',1)">+</button>
+          </div>
+          <button class="wc-log-btn" style="background:${color.accent}" onclick="logWildcard('daily')">Log</button>
+        </div>
+      </div>
     </div>
     <div class="card">
       <div class="section-head" style="color:#dc2626;background:#fff5f5">Violations</div>
       ${vRows}
+      <div class="wildcard-row">
+        <div class="wildcard-label">⚠️ Parent's choice – custom violation</div>
+        <div class="wildcard-inputs">
+          <input class="wildcard-text" id="wc-viol-label" placeholder="What happened?" />
+          <div class="wildcard-pts-wrap">
+            <button class="wc-step" onclick="wcStep('viol',-1)">−</button>
+            <span class="wc-pts-val" id="wc-viol-pts">${wcViolPts}</span>
+            <button class="wc-step" onclick="wcStep('viol',1)">+</button>
+          </div>
+          <button class="wc-log-btn" style="background:#dc2626" onclick="logWildcard('viol')">Log</button>
+        </div>
+      </div>
     </div>`;
+}
+
+function wcStep(tab, delta) {
+  if (tab==='daily') { wcDailyPts = Math.max(1,wcDailyPts+delta); document.getElementById('wc-daily-pts').textContent = wcDailyPts; }
+  if (tab==='goal')  { wcGoalPts  = Math.max(1,wcGoalPts+delta);  document.getElementById('wc-goal-pts').textContent  = wcGoalPts; }
+  if (tab==='viol')  { wcViolPts  = Math.max(1,wcViolPts+delta);  document.getElementById('wc-viol-pts').textContent  = wcViolPts; }
+}
+
+function logWildcard(tab) {
+  const kid = state.kids[activeKid];
+  if (tab==='daily') {
+    const lbl = document.getElementById('wc-daily-label').value.trim();
+    if (!lbl) return;
+    kid.total += wcDailyPts;
+    addLog('⭐ '+lbl, wcDailyPts);
+    document.getElementById('wc-daily-label').value = '';
+  } else if (tab==='goal') {
+    const lbl = document.getElementById('wc-goal-label').value.trim();
+    if (!lbl) return;
+    kid.total += wcGoalPts;
+    addLog('⭐ '+lbl, wcGoalPts);
+    document.getElementById('wc-goal-label').value = '';
+  } else if (tab==='viol') {
+    const lbl = document.getElementById('wc-viol-label').value.trim();
+    if (!lbl) return;
+    kid.total -= wcViolPts;
+    addLog('⚠ '+lbl, -wcViolPts);
+    document.getElementById('wc-viol-label').value = '';
+  }
+  saveKid(activeKid);
+  renderKid();
 }
 
 function toggleDaily(itemId) {
   const kid = state.kids[activeKid];
-  const item = state.config.daily.find(i => i.id === itemId);
+  const item = state.config.daily.find(i => i.id===itemId);
   const on = !kid.daily[itemId];
-  const delta = on ? item.pts : -item.pts;
   kid.daily[itemId] = on;
-  kid.total += delta;
-  addLog(item.label, delta);
+  kid.total += on ? item.pts : -item.pts;
+  addLog(item.label, on ? item.pts : -item.pts);
   saveKid(activeKid);
   renderKid();
 }
 
 function addViolation(vid) {
   const kid = state.kids[activeKid];
-  const v = state.config.violations.find(x => x.id === vid);
+  const v = state.config.violations.find(x => x.id===vid);
   kid.violations[vid] = (kid.violations[vid]||0)+1;
   kid.total -= v.pts;
   addLog('⚠ '+v.label, -v.pts);
@@ -523,7 +673,7 @@ function addViolation(vid) {
 
 function removeViolation(vid) {
   const kid = state.kids[activeKid];
-  const v = state.config.violations.find(x => x.id === vid);
+  const v = state.config.violations.find(x => x.id===vid);
   if (!kid.violations[vid]) return;
   kid.violations[vid]--;
   kid.total += v.pts;
@@ -537,39 +687,49 @@ function removeViolation(vid) {
 function renderGoals() {
   const kid = state.kids[activeKid];
   const color = KID_COLORS[activeKid];
-  const el = document.getElementById('tab-goals');
 
   const goalRows = state.config.goals.map(item => {
     const count = kid.goals[item.id]||0;
     const locked = !item.multi && count > 0;
-    return `
-      <div class="row" style="opacity:${locked?0.5:1}">
-        <div class="row-label">
-          <div class="row-main" style="text-decoration:${locked?'line-through':'none'}">${item.label}</div>
-          <div class="row-sub" style="color:${color.accent}">+${item.pts} pts${item.multi&&count>0?' · '+count+'× logged':''}${locked?' · done':''}</div>
-        </div>
-        <div class="counter">
-          ${count>0?'<button class="counter-btn" onclick="unlogGoal(\''+item.id+'\')">−</button>':''}
-          <button class="log-goal-btn ${locked?'locked':''}" style="${locked?'':'background:'+color.accent}" onclick="logGoal('${item.id}')">${locked?'✓':'Log'}</button>
-        </div>
-      </div>`;
+    return `<div class="row" style="opacity:${locked?0.5:1}">
+      <div class="row-label">
+        <div class="row-main" style="text-decoration:${locked?'line-through':'none'}">${item.label}</div>
+        <div class="row-sub" style="color:${color.accent}">+${item.pts} pts${item.multi&&count>0?' · '+count+'× logged':''}${locked?' · done':''}</div>
+      </div>
+      <div class="counter">
+        ${count>0?'<button class="counter-btn" onclick="unlogGoal(\''+item.id+'\')">−</button>':''}
+        <button class="log-goal-btn" style="${locked?'background:#e5e7eb;color:#9ca3af;cursor:not-allowed':'background:'+color.accent}" onclick="logGoal('${item.id}')">${locked?'✓':'Log'}</button>
+      </div>
+    </div>`;
   }).join('');
 
-  el.innerHTML = `
+  document.getElementById('tab-goals').innerHTML = `
     <div class="card">
       <div class="section-head" style="color:${color.accent};background:${color.light}">Goal achievements</div>
       ${goalRows}
+      <div class="wildcard-row">
+        <div class="wildcard-label">⭐ Parent's choice – one-off goal</div>
+        <div class="wildcard-inputs">
+          <input class="wildcard-text" id="wc-goal-label" placeholder="What did they achieve?" />
+          <div class="wildcard-pts-wrap">
+            <button class="wc-step" onclick="wcStep('goal',-1)">−</button>
+            <span class="wc-pts-val" id="wc-goal-pts">${wcGoalPts}</span>
+            <button class="wc-step" onclick="wcStep('goal',1)">+</button>
+          </div>
+          <button class="wc-log-btn" style="background:${color.accent}" onclick="logWildcard('goal')">Log</button>
+        </div>
+      </div>
     </div>
     <div class="card">
       <div class="section-head" style="color:#7c3aed;background:#faf5ff">Non-point goals</div>
-      <div class="nonpoint-item" style="padding:12px 16px">☐ Watch the rest of LOTR</div>
-      <div class="nonpoint-item" style="padding:12px 16px;border-bottom:none">☐ Watch Harry Potter 7</div>
+      <div class="row">☐ Watch the rest of LOTR</div>
+      <div class="row">☐ Watch Harry Potter 7</div>
     </div>`;
 }
 
 function logGoal(itemId) {
   const kid = state.kids[activeKid];
-  const item = state.config.goals.find(i => i.id === itemId);
+  const item = state.config.goals.find(i => i.id===itemId);
   if (!item.multi && kid.goals[itemId]) return;
   const count = (kid.goals[itemId]||0)+1;
   kid.goals[itemId] = count;
@@ -581,10 +741,9 @@ function logGoal(itemId) {
 
 function unlogGoal(itemId) {
   const kid = state.kids[activeKid];
-  const item = state.config.goals.find(i => i.id === itemId);
-  const count = kid.goals[itemId]||0;
-  if (!count) return;
-  kid.goals[itemId] = count-1;
+  const item = state.config.goals.find(i => i.id===itemId);
+  if (!kid.goals[itemId]) return;
+  kid.goals[itemId]--;
   kid.total -= item.pts;
   addLog('↩ '+item.label, -item.pts);
   saveKid(activeKid);
@@ -596,23 +755,21 @@ function unlogGoal(itemId) {
 function renderPrizes() {
   const kid = state.kids[activeKid];
   const color = KID_COLORS[activeKid];
-  const el = document.getElementById('tab-prizes');
   const extraDevice = Math.floor(kid.total/5);
 
-  const prizeRows = PRIZES.map(prize => {
+  const indPrizeRows = state.config.indPrizes.filter(p => !p.rolling).map(prize => {
     const unlocked = kid.total >= prize.pts;
-    return `
-      <div class="row">
-        <div class="prize-icon">${unlocked?'🔓':'🔒'}</div>
-        <div class="row-label">
-          <div class="prize-label" style="color:${unlocked?color.accent:'#374151'}">${prize.label}</div>
-          <div class="prize-sub">${unlocked?'Unlocked!':(prize.pts-kid.total)+' pts to go'}</div>
-        </div>
-        ${unlocked?'<button class="redeem-btn" style="background:'+color.accent+'" onclick="redeem('+prize.pts+')">Redeem</button>':''}
-      </div>`;
+    return `<div class="row">
+      <div class="prize-icon">${unlocked?'🔓':'🔒'}</div>
+      <div class="row-label">
+        <div class="prize-label" style="color:${unlocked?color.accent:'#374151'}">${prize.label}</div>
+        <div class="prize-sub">${unlocked?'Unlocked!':(prize.pts-kid.total)+' pts to go'}</div>
+      </div>
+      ${unlocked?'<button class="redeem-btn" style="background:'+color.accent+'" onclick="redeemIndPrize(\''+prize.id+'\')">Redeem</button>':''}
+    </div>`;
   }).join('');
 
-  const rollingRows = ROLLING.map(r => `
+  const rollingRows = state.config.indPrizes.filter(p => p.rolling).map(r => `
     <div class="row">
       <div class="row-label">
         <div class="prize-label">${r.label}</div>
@@ -620,41 +777,55 @@ function renderPrizes() {
       </div>
     </div>`).join('');
 
+  const famPrizeRows = state.config.famPrizes.map(prize => {
+    const ft = familyTotal();
+    const pct = Math.min(100,(ft/prize.pts)*100);
+    const minEach = Math.floor(prize.pts/3);
+    const myShare = kid.total >= minEach;
+    return `<div class="row">
+      <div class="prize-icon">${famPrizeUnlocked(prize)?'🔓':'🔒'}</div>
+      <div class="row-label">
+        <div class="prize-label">${prize.label}</div>
+        <div class="prize-sub">Family: ${ft}/${prize.pts} pts · Your share: ${kid.total}/${minEach} ${myShare?'✅':''}</div>
+      </div>
+    </div>`;
+  }).join('');
+
   const redeemedHtml = kid.redeemed.length ? `
     <div class="card">
       <div class="section-head" style="color:#16a34a;background:#f0fdf4">Redeemed</div>
-      ${kid.redeemed.map((r,i) => `
-        <div class="row" ${i===kid.redeemed.length-1?'style="border-bottom:none"':''}>
-          <div class="row-label"><div style="font-size:15px">${r.label}</div><div style="font-size:12px;color:#aaa">${r.d}</div></div>
-          <span style="font-size:18px">✅</span>
-        </div>`).join('')}
+      ${kid.redeemed.map(r => `<div class="row"><div class="row-label"><div style="font-size:15px">${r.label}</div><div style="font-size:12px;color:#aaa">${r.d}</div></div><span>✅</span></div>`).join('')}
     </div>` : '';
 
-  el.innerHTML = `
-    <div class="card">
-      <div class="section-head" style="color:${color.accent};background:${color.light}">Prize ladder</div>
-      ${prizeRows}
-    </div>
+  document.getElementById('tab-prizes').innerHTML = `
+    ${indPrizeRows ? `<div class="card">
+      <div class="section-head" style="color:${color.accent};background:${color.light}">Individual prizes</div>
+      ${indPrizeRows}
+    </div>` : ''}
     <div class="card">
       <div class="section-head" style="color:#d97706;background:#fffbeb">Rolling rewards</div>
       ${rollingRows}
-      <div class="row" style="border-bottom:none">
+      <div class="row">
         <div class="row-label">
           <div class="prize-label">📱 Device time</div>
           <div class="prize-sub">2 base + ${extraDevice} bonus = <strong>${2+extraDevice} hrs today</strong></div>
         </div>
       </div>
     </div>
+    <div class="card">
+      <div class="section-head" style="color:#1e3a5f;background:#f0f4ff">Family prizes (go to home screen)</div>
+      ${famPrizeRows}
+    </div>
     ${redeemedHtml}`;
 }
 
-function redeem(prizePts) {
+function redeemIndPrize(prizeId) {
   const kid = state.kids[activeKid];
-  if (kid.total < prizePts) return;
-  const prize = PRIZES.find(p => p.pts === prizePts);
-  kid.total -= prizePts;
+  const prize = state.config.indPrizes.find(p => p.id===prizeId);
+  if (!prize || kid.total < prize.pts) return;
+  kid.total -= prize.pts;
   kid.redeemed.push({label:prize.label, d:todayStr()});
-  addLog('🎉 Redeemed '+prize.label, -prizePts);
+  addLog('🎉 Redeemed '+prize.label, -prize.pts);
   saveKid(activeKid);
   renderKid();
 }
@@ -687,15 +858,14 @@ function openEdit() {
   document.getElementById('edit-overlay').classList.add('open');
 }
 
-function closeEdit() {
-  document.getElementById('edit-overlay').classList.remove('open');
-}
+function closeEdit() { document.getElementById('edit-overlay').classList.remove('open'); }
 
 function saveEdit() {
   state.config = editDraft;
   saveConfig();
   closeEdit();
   if (document.getElementById('screen-kid').classList.contains('active')) renderKid();
+  else renderHome();
 }
 
 function switchEditTab(section, btn) {
@@ -706,10 +876,51 @@ function switchEditTab(section, btn) {
 }
 
 function renderEditBody() {
-  const items = editDraft[editSection];
-  const isGoals = editSection === 'goals';
   const body = document.getElementById('edit-body');
+  const isGoals = editSection==='goals';
+  const isPrizes = editSection==='indPrizes' || editSection==='famPrizes';
 
+  if (isPrizes) {
+    const items = editDraft[editSection];
+    const isInd = editSection==='indPrizes';
+    const itemsHtml = items.map((item,idx) => `
+      <div class="prize-edit-row">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <input class="edit-input" style="flex:1;margin-right:8px" value="${escHtml(item.label)}" onchange="editItemLabel(${idx},this.value)" />
+          <button class="del-btn" onclick="deleteEditItem(${idx})">×</button>
+        </div>
+        <div class="prize-edit-controls">
+          <span class="edit-pts-label">${isInd&&item.rolling?'every':'at'} pts:</span>
+          <div class="edit-stepper">
+            <button class="step-btn" onclick="editItemPts(${idx},-5)">−</button>
+            <span class="step-val" id="edit-pts-${idx}">${item.pts}</span>
+            <button class="step-btn" onclick="editItemPts(${idx},5)">+</button>
+          </div>
+          ${isInd?`<label style="font-size:12px;color:#9ca3af;display:flex;align-items:center;gap:4px"><input type="checkbox" ${item.rolling?'checked':''} onchange="editDraft.indPrizes[${idx}].rolling=this.checked"> rolling</label>`:''}
+        </div>
+      </div>`).join('');
+
+    const addHtml = `
+      <div class="add-new">
+        <div class="add-new-label">Add new ${isInd?'individual':'family'} prize</div>
+        <input class="add-input" id="new-label" placeholder="Prize description..." />
+        <div class="add-controls">
+          <span class="edit-pts-label">pts:</span>
+          <div class="edit-stepper">
+            <button class="step-btn" onclick="stepNew(-5)">−</button>
+            <span class="step-val" id="new-pts-val">25</span>
+            <button class="step-btn" onclick="stepNew(5)">+</button>
+          </div>
+          ${isInd?`<label style="font-size:12px;color:#9ca3af;display:flex;align-items:center;gap:4px"><input type="checkbox" id="new-rolling"> rolling</label>`:''}
+          <button class="add-btn" onclick="addEditItem()">Add</button>
+        </div>
+      </div>`;
+    body.innerHTML = itemsHtml + addHtml;
+    body._newPts = 25;
+    return;
+  }
+
+  const items = editDraft[editSection];
   const itemsHtml = items.map((item,idx) => `
     <div class="edit-item">
       <div class="edit-item-inner">
@@ -721,13 +932,13 @@ function renderEditBody() {
             <span class="step-val" id="edit-pts-${idx}">${item.pts}</span>
             <button class="step-btn" onclick="editItemPts(${idx},1)">+</button>
           </div>
-          ${isGoals?`<label class="edit-multi-label"><input type="checkbox" ${item.multi?'checked':''} onchange="editItemMulti(${idx},this.checked)"> can log multiple times</label>`:''}
+          ${isGoals?`<label style="font-size:12px;color:#9ca3af;display:flex;align-items:center;gap:4px;margin-left:6px"><input type="checkbox" ${item.multi?'checked':''} onchange="editItemMulti(${idx},this.checked)"> can log multiple times</label>`:''}
         </div>
       </div>
       <button class="del-btn" onclick="deleteEditItem(${idx})">×</button>
     </div>`).join('');
 
-  const multiField = isGoals ? `<label class="edit-multi-label" style="margin-left:0"><input type="checkbox" id="new-multi"> can log multiple times</label>` : '';
+  const multiField = isGoals ? `<label style="font-size:12px;color:#9ca3af;display:flex;align-items:center;gap:4px"><input type="checkbox" id="new-multi"> can log multiple times</label>` : '';
 
   body.innerHTML = itemsHtml + `
     <div class="add-new">
@@ -748,18 +959,14 @@ function renderEditBody() {
 }
 
 function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-function editItemLabel(idx, val) { editDraft[editSection][idx].label = val; }
-function editItemMulti(idx, val) { editDraft[editSection][idx].multi = val; }
-function editItemPts(idx, delta) {
+function editItemLabel(idx,val) { editDraft[editSection][idx].label=val; }
+function editItemMulti(idx,val) { editDraft[editSection][idx].multi=val; }
+function editItemPts(idx,delta) {
   const item = editDraft[editSection][idx];
-  item.pts = Math.max(1, item.pts + delta);
+  item.pts = Math.max(1,item.pts+delta);
   document.getElementById('edit-pts-'+idx).textContent = item.pts;
 }
-function deleteEditItem(idx) {
-  editDraft[editSection].splice(idx,1);
-  renderEditBody();
-}
+function deleteEditItem(idx) { editDraft[editSection].splice(idx,1); renderEditBody(); }
 function stepNew(delta) {
   const body = document.getElementById('edit-body');
   body._newPts = Math.max(1,(body._newPts||2)+delta);
@@ -771,7 +978,8 @@ function addEditItem() {
   const body = document.getElementById('edit-body');
   const pts = body._newPts||2;
   const item = {id:uid(), label, pts};
-  if (editSection === 'goals') item.multi = !!(document.getElementById('new-multi')&&document.getElementById('new-multi').checked);
+  if (editSection==='goals') item.multi = !!(document.getElementById('new-multi')&&document.getElementById('new-multi').checked);
+  if (editSection==='indPrizes') item.rolling = !!(document.getElementById('new-rolling')&&document.getElementById('new-rolling').checked);
   editDraft[editSection].push(item);
   renderEditBody();
 }
