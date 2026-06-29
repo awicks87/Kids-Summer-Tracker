@@ -168,9 +168,11 @@
   .prize-edit-label { font-size: 14px; margin-bottom: 6px; }
   .prize-edit-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .prize-type-badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 700; }
+  .copy-fab { position: fixed; bottom: 24px; right: 20px; z-index: 200; background: #1e3a5f; color: #fff; border: none; border-radius: 99px; padding: 12px 18px; font-size: 14px; font-weight: 700; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
 </style>
 </head>
 <body>
+<button class="copy-fab" id="copy-fab" onclick="copyAllCode()">📋 Copy code</button>
 
 <!-- HOME SCREEN -->
 <div id="screen-home" class="screen active">
@@ -180,8 +182,8 @@
     <div class="sub" id="home-total-sub">0 pts across all kids</div>
     <button class="edit-btn" onclick="openEdit()">✏️ Edit categories</button>
   </div>
-  <div class="family-prizes" id="family-prizes-container"></div>
   <div class="kid-cards" id="kid-cards-container"></div>
+  <div class="family-prizes" id="family-prizes-container"></div>
   <div class="home-footer">Daily items reset automatically each morning · awicks87.github.io/Kids-Summer-Tracker</div>
 </div>
 
@@ -473,7 +475,8 @@ function renderHome() {
     const color = KID_COLORS[i];
     // next individual prize
     const nextInd = state.config.indPrizes.filter(p => !p.rolling).find(p => kid.total < p.pts);
-    const extraDevice = Math.floor(kid.total/5);
+    const dailyPtsHome = state.config.daily.filter(i => kid.daily[i.id]).reduce((s,i) => s+i.pts, 0);
+    const extraDevice = Math.floor(dailyPtsHome/5);
     const unlockedInd = state.config.indPrizes.filter(p => !p.rolling && kid.total >= p.pts);
 
     const chipsHtml = [
@@ -520,7 +523,7 @@ function renderKid() {
   document.querySelectorAll('.tab-btn.active').forEach(b => b.style.color = color.accent);
 
   const dailyPts = state.config.daily.filter(i => kid.daily[i.id]).reduce((s,i) => s+i.pts, 0);
-  const extraDevice = Math.floor(kid.total/5);
+  const extraDevice = Math.floor(dailyPts/5);
   const nextInd = state.config.indPrizes.filter(p => !p.rolling).find(p => kid.total < p.pts);
   const pct = nextInd ? Math.min(100,(kid.total/nextInd.pts)*100) : 100;
 
@@ -755,7 +758,8 @@ function unlogGoal(itemId) {
 function renderPrizes() {
   const kid = state.kids[activeKid];
   const color = KID_COLORS[activeKid];
-  const extraDevice = Math.floor(kid.total/5);
+  const todayPts = state.config.daily.filter(i => kid.daily[i.id]).reduce((s,i) => s+i.pts, 0);
+  const extraDevice = Math.floor(todayPts/5);
 
   const indPrizeRows = state.config.indPrizes.filter(p => !p.rolling).map(prize => {
     const unlocked = kid.total >= prize.pts;
