@@ -317,7 +317,7 @@ function todayStr() { return new Date().toDateString(); }
 function uid() { return Math.random().toString(36).slice(2,8); }
 
 function freshKid(label) {
-  return {label, total:0, daily:{}, goals:{}, violations:{}, log:[], redeemed:[], lastDay:null};
+  return {label, total:0, todayPts:0, daily:{}, goals:{}, violations:{}, log:[], redeemed:[], lastDay:null};
 }
 
 // Returns true if it's past 3am (reset window)
@@ -344,7 +344,7 @@ function runDailyReset(kids) {
         existing[k.label] = bk;
         localStorage.setItem(backupKey(), JSON.stringify(existing));
       } catch(e) {}
-      return {...k, daily:{}, violations:{}, lastDay:today};
+      return {...k, daily:{}, violations:{}, todayPts:0, lastDay:today};
     }
     return k;
   });
@@ -712,19 +712,19 @@ function logWildcard(tab) {
   if (tab==='daily') {
     const lbl = document.getElementById('wc-daily-label').value.trim();
     if (!lbl) return;
-    kid.total += wcDailyPts;
+    kid.total += wcDailyPts; kid.todayPts = (kid.todayPts||0) + wcDailyPts;
     addLog('⭐ '+lbl, wcDailyPts);
     document.getElementById('wc-daily-label').value = '';
   } else if (tab==='goal') {
     const lbl = document.getElementById('wc-goal-label').value.trim();
     if (!lbl) return;
-    kid.total += wcGoalPts;
+    kid.total += wcGoalPts; kid.todayPts = (kid.todayPts||0) + wcGoalPts;
     addLog('⭐ '+lbl, wcGoalPts);
     document.getElementById('wc-goal-label').value = '';
   } else if (tab==='viol') {
     const lbl = document.getElementById('wc-viol-label').value.trim();
     if (!lbl) return;
-    kid.total -= wcViolPts;
+    kid.total -= wcViolPts; kid.todayPts = (kid.todayPts||0) - wcViolPts;
     addLog('⚠ '+lbl, -wcViolPts);
     document.getElementById('wc-viol-label').value = '';
   }
@@ -737,8 +737,9 @@ function toggleDaily(itemId) {
   const item = state.config.daily.find(i => i.id===itemId);
   const on = !kid.daily[itemId];
   kid.daily[itemId] = on;
-  kid.total += on ? item.pts : -item.pts;
-  addLog(item.label, on ? item.pts : -item.pts);
+  const delta = on ? item.pts : -item.pts;
+  kid.total += delta; kid.todayPts = (kid.todayPts||0) + delta;
+  addLog(item.label, delta);
   saveKid(activeKid);
   renderKid();
 }
@@ -747,7 +748,7 @@ function addViolation(vid) {
   const kid = state.kids[activeKid];
   const v = state.config.violations.find(x => x.id===vid);
   kid.violations[vid] = (kid.violations[vid]||0)+1;
-  kid.total -= v.pts;
+  kid.total -= v.pts; kid.todayPts = (kid.todayPts||0) - v.pts;
   addLog('⚠ '+v.label, -v.pts);
   saveKid(activeKid);
   renderKid();
@@ -758,7 +759,7 @@ function removeViolation(vid) {
   const v = state.config.violations.find(x => x.id===vid);
   if (!kid.violations[vid]) return;
   kid.violations[vid]--;
-  kid.total += v.pts;
+  kid.total += v.pts; kid.todayPts = (kid.todayPts||0) + v.pts;
   addLog('↩ '+v.label, v.pts);
   saveKid(activeKid);
   renderKid();
