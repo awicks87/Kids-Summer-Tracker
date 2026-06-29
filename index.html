@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>Summer Tracker ☀️</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Summer Tracker ☀️ v1.3</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #f1f5f9; min-height: 100vh; }
@@ -168,11 +171,10 @@
   .prize-edit-label { font-size: 14px; margin-bottom: 6px; }
   .prize-edit-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .prize-type-badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 700; }
-  .copy-fab { position: fixed; bottom: 24px; right: 20px; z-index: 200; background: #1e3a5f; color: #fff; border: none; border-radius: 99px; padding: 12px 18px; font-size: 14px; font-weight: 700; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+  .copy-fab { display:none; }
 </style>
 </head>
 <body>
-<button class="copy-fab" id="copy-fab" onclick="copyAllCode()">📋 Copy code</button>
 
 <!-- HOME SCREEN -->
 <div id="screen-home" class="screen active">
@@ -181,6 +183,10 @@
     <h1>Summer Tracker</h1>
     <div class="sub" id="home-total-sub">0 pts across all kids</div>
     <button class="edit-btn" onclick="openEdit()">✏️ Edit categories</button>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+      <button class="edit-btn" style="margin-top:0;font-size:12px;padding:6px 14px" onclick="exportData()">📤 Export backup</button>
+      <button class="edit-btn" style="margin-top:0;font-size:12px;padding:6px 14px" onclick="importData()">📥 Import backup</button>
+    </div>
   </div>
   <div class="kid-cards" id="kid-cards-container"></div>
   <div class="family-prizes" id="family-prizes-container"></div>
@@ -305,11 +311,43 @@ const DEFAULT_FAM_PRIZES = [
 
 // ── STORAGE ───────────────────────────────────────────────────────────────────
 
+const APP_VERSION = "1.3";
+
 function todayStr() { return new Date().toDateString(); }
 function uid() { return Math.random().toString(36).slice(2,8); }
 
 function freshKid(label) {
   return {label, total:0, daily:{}, goals:{}, violations:{}, log:[], redeemed:[], lastDay:null};
+}
+
+// Returns true if it's past 3am (reset window)
+function isPast3am() {
+  return new Date().getHours() >= 3;
+}
+
+// Key for today's backup — date string of the day being backed up
+function backupKey() {
+  // If it's past 3am, back up yesterday's data keyed to yesterday
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return 'sk_backup_' + d.toDateString();
+}
+
+function runDailyReset(kids) {
+  const today = todayStr();
+  return kids.map(k => {
+    if (k.lastDay !== today && isPast3am()) {
+      // Save backup before wiping daily
+      try {
+        const bk = { date: k.lastDay, label: k.label, total: k.total, dailyPts: Object.keys(k.daily||{}).length };
+        const existing = JSON.parse(localStorage.getItem(backupKey())||'{}');
+        existing[k.label] = bk;
+        localStorage.setItem(backupKey(), JSON.stringify(existing));
+      } catch(e) {}
+      return {...k, daily:{}, violations:{}, lastDay:today};
+    }
+    return k;
+  });
 }
 
 function loadState() {
@@ -325,18 +363,59 @@ function loadState() {
     violations:[...DEFAULT_VIOLATIONS],
     indPrizes:[...DEFAULT_IND_PRIZES],
     famPrizes:[...DEFAULT_FAM_PRIZES],
-    famRedeemed: [],
+    famRedeemed:[],
   };
-  // backfill if missing
   if (!config.indPrizes) config.indPrizes = [...DEFAULT_IND_PRIZES];
   if (!config.famPrizes) config.famPrizes = [...DEFAULT_FAM_PRIZES];
   if (!config.famRedeemed) config.famRedeemed = [];
-  kids = kids.map(k => k.lastDay !== todayStr() ? {...k, daily:{}, violations:{}, lastDay:todayStr()} : k);
+  kids = runDailyReset(kids);
   return {kids, config};
 }
 
 function saveKid(i) { localStorage.setItem('sk_kid_'+i, JSON.stringify(state.kids[i])); }
 function saveConfig() { localStorage.setItem('sk_config', JSON.stringify(state.config)); }
+
+// ── EXPORT / IMPORT ───────────────────────────────────────────────────────────
+
+function exportData() {
+  const data = {
+    v: APP_VERSION,
+    exported: new Date().toISOString(),
+    kids: state.kids,
+    config: state.config,
+  };
+  const str = JSON.stringify(data);
+  navigator.clipboard.writeText(str).then(() => {
+    alert('✅ Data copied to clipboard!\n\nPaste it into your Notes app to save it.');
+  }).catch(() => {
+    // fallback: show in a textarea
+    const ta = document.createElement('textarea');
+    ta.value = str;
+    ta.style.cssText = 'position:fixed;top:20px;left:10px;right:10px;height:200px;z-index:9999;font-size:11px;';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    alert('✅ Data copied!\n\nPaste it into your Notes app to save it.');
+  });
+}
+
+function importData() {
+  const raw = prompt('Paste your backup data here:');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw.trim());
+    if (!data.kids || !data.config) throw new Error('Invalid');
+    state.kids = data.kids;
+    state.config = data.config;
+    state.kids.forEach((_,i) => saveKid(i));
+    saveConfig();
+    alert('✅ Data restored successfully!');
+    renderHome();
+  } catch(e) {
+    alert('❌ Could not read backup. Make sure you pasted the full text.');
+  }
+}
 
 let state = loadState();
 let activeKid = 0;
