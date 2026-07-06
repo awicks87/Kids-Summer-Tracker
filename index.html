@@ -441,10 +441,11 @@ function importData() {
   if (!raw) return;
   try {
     var data = JSON.parse(raw.trim());
-    if (!data.kids || !data.config) throw new Error('bad');
-    state.kids = data.kids; state.config = data.config;
+    if (!data.kids) throw new Error('bad');
+    // Only restore kids data, keep current config/categories intact
+    state.kids = data.kids;
     for (var i=0; i<state.kids.length; i++) saveKid(i);
-    saveConfig(); alert('Data restored!'); renderHome();
+    alert('Points and logs restored! Categories unchanged.'); renderHome();
   } catch(e) { alert('Could not read backup. Make sure you pasted the full text.'); }
 }
 
