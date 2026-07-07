@@ -320,15 +320,15 @@ var DEFAULT_VIOLATIONS = [
 
 var DEFAULT_IND_PRIZES = [
   {id:"rolling_dev", label:"+1 hr device time",      pts:5,  rolling:true},
-  {id:"donuts",      label:"Donuts for breakfast",    pts:25, rolling:false},
+  {id:"donuts",      label:"Donuts for breakfast",    pts:50, rolling:false},
   {id:"ten_bonus",   label:"10-item day bonus",       pts:10, rolling:false, special:"ten_items"}
 ];
 
 var DEFAULT_FAM_PRIZES = [
   {id:"icecream", label:"Ice cream outing",           pts:50},
   {id:"bistro",   label:"Breakfast at Valley Bistro", pts:150},
-  {id:"drivein",  label:"Drive-in or Senators game",  pts:250},
-  {id:"knoebels", label:"Trip to Knoebels",           pts:500}
+  {id:"drivein",  label:"Drive-in or Senators game",  pts:300},
+  {id:"knoebels", label:"Trip to Knoebels",           pts:600}
 ];
 
 var WEEKLY_REQS = [
@@ -618,9 +618,9 @@ function renderLog() {
 // ── DAILY TAB ─────────────────────────────────────────────────────────────────
 function renderDaily() {
   var kid = state.kids[activeKid], color = KID_COLORS[activeKid];
-  var hasMustDo = MUST_DO.some(function(id) { return !!kid.daily[id]; });
-  var warnHtml = hasMustDo ? '' :
-    '<div class="warn-banner">⚠️ Must complete at least one of: Read a book, Shower without being asked, Do laundry, Try a new food, or Tidy downstairs — plus all daily chores — to earn points today.</div>';
+  var hasDailyChores = !!kid.daily['chores_d'];
+  var warnHtml = hasDailyChores ? '' :
+    '<div class="warn-banner">⚠️ Complete all daily chores to earn points today.</div>';
 
   var dailyRows = state.config.daily.map(function(item) {
     var on = !!kid.daily[item.id];
