@@ -278,12 +278,15 @@ var KID_COLORS = [
 ];
 
 var DEFAULT_DAILY = [
+  {id:"chores_d",  label:"All daily chores",                      pts:3},
+  {id:"chores_w",  label:"Weekend or rotating chores",            pts:3, weeklyOnly:true},
   {id:"outside",   label:"Play outside",                          note:"min 30 min", pts:2},
   {id:"read",      label:"Read a book",                           note:"min 30 min", pts:2},
   {id:"movie",     label:"Watch a movie",                         pts:1},
   {id:"feed",      label:"Feed Snarky",                           pts:1},
   {id:"eclass",    label:"Online class or educational program",   pts:5},
   {id:"art",       label:"Create or design something artistic",   pts:2},
+  {id:"chores_out",label:"Outdoor chores",                         pts:5},
   {id:"walk",      label:"Go for a walk",                         pts:3},
   {id:"bike",      label:"Ride your bike",                        pts:3},
   {id:"swim",      label:"Swim",                                  pts:2},
@@ -297,9 +300,7 @@ var DEFAULT_DAILY = [
   {id:"laundry",   label:"Do laundry",                            pts:4},
   {id:"tidy",      label:"Tidy, vacuum, or dust downstairs",      pts:2},
   {id:"instrument",label:"Practice instrument",                   pts:2},
-  {id:"game",      label:"Play a game with others (non-device)",  pts:2},
-  {id:"chores_d",  label:"All daily chores",                      pts:3},
-  {id:"chores_w",  label:"Weekend or rotating chores",            pts:3, weeklyOnly:true}
+  {id:"game",      label:"Play a game with others (non-device)",  pts:2}
 ];
 
 var DEFAULT_GOALS = [
