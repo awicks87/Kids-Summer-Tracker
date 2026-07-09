@@ -918,10 +918,9 @@ function redeemInd(prizeId) {
   var kid = state.kids[activeKid];
   var prize = state.config.indPrizes.find(function(p) { return p.id===prizeId; });
   if (!prize || kid.total < prize.pts) return;
-  kid.total -= prize.pts;
   kid.redeemed = kid.redeemed || [];
   kid.redeemed.push({label:prize.label, d:todayStr()});
-  addLog('🎉 Redeemed '+prize.label, -prize.pts);
+  addLog('🎉 Redeemed '+prize.label, 0);
   saveKid(activeKid); renderKid();
 }
 
