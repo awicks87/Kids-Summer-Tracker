@@ -438,15 +438,30 @@ function fallbackCopy(str) {
   alert('Data copied! Paste into Notes to save.');
 }
 function importData() {
+  var choice = confirm('Tap OK to restore points only (safe, keeps new categories and logs).\n\nTap Cancel to restore everything (points, logs, and categories).');
   var raw = prompt('Paste your backup data here:');
   if (!raw) return;
   try {
     var data = JSON.parse(raw.trim());
     if (!data.kids) throw new Error('bad');
-    // Only restore kids data, keep current config/categories intact
-    state.kids = data.kids;
-    for (var i=0; i<state.kids.length; i++) saveKid(i);
-    alert('Points and logs restored! Categories unchanged.'); renderHome();
+    if (choice) {
+      // Points only — just restore totals, keep everything else
+      data.kids.forEach(function(savedKid, i) {
+        if (state.kids[i]) {
+          state.kids[i].total = savedKid.total;
+          state.kids[i].todayPts = savedKid.todayPts || 0;
+          state.kids[i].redeemed = savedKid.redeemed || [];
+        }
+      });
+      for (var i=0; i<state.kids.length; i++) saveKid(i);
+      alert('Points restored! Categories and logs unchanged.');
+    } else {
+      // Full restore — kids data only, keep config
+      state.kids = data.kids;
+      for (var i=0; i<state.kids.length; i++) saveKid(i);
+      alert('Full data restored! Categories unchanged.');
+    }
+    renderHome();
   } catch(e) { alert('Could not read backup. Make sure you pasted the full text.'); }
 }
 
